@@ -23,7 +23,10 @@ INSERT INTO curso (nome) VALUES
 -- Categorias: troque ou acrescente as da sua equipe. Mantenha os ids: os anúncios de exemplo usam categoria_id.
 -- O slug vai na URL da busca (?categoria=eletronicos): minúsculas, sem acentos, hífen no lugar de espaços.
 INSERT INTO categoria (id, nome, slug) VALUES
-  (1, 'Eletrônicos', 'eletronicos');
+  (1, 'Eletrônicos', 'eletronicos'),
+  (2, 'Jogos', 'jogos'),
+  (3, 'Artigos Esportivos', 'artigos-esportivos'),
+  (4, 'Materiais de Estudo', 'materiais-de-estudo');
 
 -- ---------------------------------------------------------------------------
 -- Dados de exemplo, para testar a busca. Opcional: pode adaptar ou apagar daqui para baixo.
