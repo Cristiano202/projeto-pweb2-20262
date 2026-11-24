@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
 import { LoginPage } from '../pages/LoginPage';
 import { CadastroPage } from '../pages/CadastroPage';
+import { AdminLoginPage } from '../pages/AdminLoginPage';
 
 export function AppRoutes() {
   return (
@@ -10,10 +11,10 @@ export function AppRoutes() {
         {/* Únicas rotas públicas (RF01) */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cadastro" element={<CadastroPage />} />
-        <Route path="/admin/login" element={<div>Login Administrador</div>} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
 
         {/* Rotas Protegidas - Estudante */}
-        <Route element={<ProtectedRoute perfisPermitidos={['ESTUDANTE']} />}>\
+        <Route element={<ProtectedRoute perfisPermitidos={['ESTUDANTE']} />}>
           <Route path="/" element={<Navigate to="/vendas" replace />} />
           <Route path="/vendas" element={<div>Listagem de Vendas</div>} />
           <Route path="/doacoes" element={<div>Listagem de Doações</div>} />
