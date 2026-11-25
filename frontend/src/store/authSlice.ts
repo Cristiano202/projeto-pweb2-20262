@@ -49,7 +49,16 @@ export const loginAdminThunk = createAsyncThunk(
   'auth/loginAdmin',
   async (credenciais: { email: string; senha: string }, { rejectWithValue }) => {
     try {
-      const { data } = await api.post('/auth/admin/login', credenciais);
+      const { data } = await api.post('/auth/login', credenciais);
+      const perfil = String(data.usuario?.perfil || data.usuario?.papel || '').toUpperCase();
+
+      if (perfil !== 'ADMIN') {
+        return rejectWithValue({
+          mensagem: 'Acesso negado: esta conta não possui perfil de administrador.',
+          campos: {},
+        });
+      }
+
       return data;
     } catch (err: any) {
       return rejectWithValue(
@@ -80,16 +89,26 @@ export const restaurarSessaoThunk = createAsyncThunk(
   'auth/restaurarSessao',
   async (_, { rejectWithValue }) => {
     const token = localStorage.getItem('token');
+    const usuarioSalvo = JSON.parse(localStorage.getItem('usuario') || 'null');
+    const perfilSalvo = (localStorage.getItem('perfil') as PerfilUsuario | null) || 'ESTUDANTE';
+
     if (!token) return rejectWithValue(null);
 
     try {
       const { data } = await api.get('/usuarios/me');
-      return { token, usuario: data };
-    } catch {
-      localStorage.removeItem('token');
-      localStorage.removeItem('perfil');
-      localStorage.removeItem('usuario');
-      return rejectWithValue(null);
+      return {
+        token,
+        usuario: data && typeof data === 'object' ? { ...usuarioSalvo, ...data } : usuarioSalvo,
+        perfil: perfilSalvo,
+      };
+    } catch (err: any) {
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('perfil');
+        localStorage.removeItem('usuario');
+        return rejectWithValue(null);
+      }
+      return { token, usuario: usuarioSalvo, perfil: perfilSalvo };
     }
   }
 );
@@ -183,7 +202,7 @@ const authSlice = createSlice({
       .addCase(restaurarSessaoThunk.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.usuario = action.payload.usuario;
-        state.perfil = action.payload.usuario?.perfil || 'ESTUDANTE';
+        state.perfil = action.payload.perfil;
       })
       .addCase(restaurarSessaoThunk.rejected, (state) => {
         state.token = null;
