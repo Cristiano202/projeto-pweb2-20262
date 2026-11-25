@@ -15,11 +15,23 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const status = error.response?.status;
+    const url = String(error.config?.url || '');
+    const ehRotaAuth = url.includes('/auth/login') || url.includes('/auth/cadastro');
+
+    if (status === 401 && !ehRotaAuth) {
+      const perfilAnterior = localStorage.getItem('perfil');
+
       localStorage.removeItem('token');
       localStorage.removeItem('perfil');
       localStorage.removeItem('usuario');
+
+      const destino = perfilAnterior === 'ADMIN' ? '/admin/login' : '/login';
+      if (window.location.pathname !== destino) {
+        window.location.replace(destino);
+      }
     }
+
     return Promise.reject(error);
   }
 );
