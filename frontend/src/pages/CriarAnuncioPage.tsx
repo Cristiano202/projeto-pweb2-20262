@@ -5,6 +5,7 @@ import { listasService } from '../services/listasService';
 import { useAppDispatch, useAppSelector } from '../store';
 import { criarAnuncioThunk, limparAnuncioDetalhe } from '../store/anunciosSlice';
 import type { Categoria, NovoAnuncioForm } from '../types';
+import { Button } from '../components/ui';
 
 export function CriarAnuncioPage() {
   const dispatch = useAppDispatch();
@@ -56,8 +57,11 @@ export function CriarAnuncioPage() {
     <main className="anuncio-page">
       <section className="anuncio-page-content">
         <header className="anuncio-page-heading">
-          <h1>Criar anúncio</h1>
-          <p>Preencha os dados e publique seu item para os estudantes do campus.</p>
+          <div>
+            <h1>Criar anúncio</h1>
+            <p>Preencha os dados e publique seu item para os estudantes do campus.</p>
+          </div>
+          <Button type="button" variant="secondary" onClick={() => navigate(-1)}>Voltar</Button>
         </header>
         {erroCategorias ? (
           <div className="anuncio-alert-error" role="alert">{erroCategorias}</div>

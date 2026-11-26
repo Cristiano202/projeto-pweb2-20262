@@ -11,7 +11,7 @@
 .profile-header-card,
 .profile-edit-card,
 .profile-ad-section {
-  max-width: 960px;
+  max-width: 1120px;
   margin: 0 auto;
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -163,7 +163,7 @@
 }
 
 .profile-edit-card {
-  max-width: 680px;
+  max-width: 720px;
   padding: 2rem;
 }
 

@@ -97,7 +97,7 @@ export const LargeModal: Story = {
     >
       <div>
         <p>
-          O Marketplace IFPB Cajazeiras é exclusivo para negociações entre estudantes do campus.
+          O BRICS DO IF é exclusivo para negociações entre estudantes do campus.
         </p>
         <p style={{ marginTop: '1rem' }}>
           Não são permitidos pagamentos dentro da plataforma. As entregas e pagamentos devem ser combinados presencialmente no campus.

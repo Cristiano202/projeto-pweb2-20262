@@ -53,6 +53,9 @@ export function DetalheAnuncioPage() {
   return (
     <main className="anuncio-page">
       <article className="anuncio-page-content">
+        <div className="anuncio-detail-topbar">
+          <Button type="button" variant="secondary" onClick={() => navigate(-1)}>Voltar</Button>
+        </div>
         <div className="anuncio-detail-layout">
           <AnuncioGallery
             titulo={anuncio.titulo}

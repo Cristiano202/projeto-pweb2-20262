@@ -43,7 +43,7 @@ export function LoginPage() {
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <h1 className="auth-title">Marketplace IFPB</h1>
+          <h1 className="auth-title">BRICS DO IF</h1>
           <p className="auth-subtitle">Acesse sua conta para comprar, doar e negociar</p>
         </div>
 
