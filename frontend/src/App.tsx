@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from './store';
 import { restaurarSessaoThunk } from './store/authSlice';
 import { AppRoutes } from './routes/AppRoutes';
+import { ThemeToggle } from './components/ThemeToggle';
 
 export function App() {
   const dispatch = useAppDispatch();
@@ -13,7 +14,12 @@ export function App() {
     }
   }, [dispatch]);
 
-  return <AppRoutes />;
+  return (
+    <>
+      <AppRoutes />
+      <ThemeToggle />
+    </>
+  );
 }
 
 export default App;

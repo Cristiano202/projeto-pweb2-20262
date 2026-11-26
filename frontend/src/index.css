@@ -51,15 +51,20 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  text-align: left;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+}
+
+@media (min-width: 1441px) {
+  #root {
+    border-inline: 1px solid var(--border);
+  }
 }
 
 body {
@@ -108,4 +113,263 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+/* Paleta refinada do modo escuro */
+[data-theme='dark'] {
+  --dark-bg: #0b1120;
+  --dark-surface: #111827;
+  --dark-surface-elevated: #1a2435;
+  --dark-border: #334155;
+  --dark-text: #f1f5f9;
+  --dark-text-muted: #a8b3c3;
+  --dark-accent: #22c55e;
+}
+
+[data-theme='dark'] body,
+[data-theme='dark'] #root,
+[data-theme='dark'] .auth-container,
+[data-theme='dark'] .profile-page,
+[data-theme='dark'] .anuncio-page,
+[data-theme='dark'] .listagem-page,
+[data-theme='dark'] .not-found-page {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+[data-theme='dark'] .auth-card,
+[data-theme='dark'] .profile-header-card,
+[data-theme='dark'] .profile-edit-card,
+[data-theme='dark'] .profile-ad-section,
+[data-theme='dark'] .profile-ad-card,
+[data-theme='dark'] .anuncio-page-content,
+[data-theme='dark'] .anuncio-card,
+[data-theme='dark'] .listagem-filtros,
+[data-theme='dark'] .listagem-status,
+[data-theme='dark'] .listagem-vazia,
+[data-theme='dark'] .anuncio-photo-item,
+[data-theme='dark'] .anuncio-seller-card,
+[data-theme='dark'] .modal-content,
+[data-theme='dark'] .not-found-card {
+  border-color: var(--dark-border);
+  background: var(--dark-surface);
+  color: var(--dark-text);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme='dark'] .modal-header,
+[data-theme='dark'] .modal-footer,
+[data-theme='dark'] .listagem-tabs,
+[data-theme='dark'] .anuncio-detail-description {
+  border-color: var(--dark-border);
+}
+
+[data-theme='dark'] .auth-title,
+[data-theme='dark'] .profile-info h1,
+[data-theme='dark'] .profile-edit-heading h1,
+[data-theme='dark'] .profile-section-heading h2,
+[data-theme='dark'] .profile-ad-content h3 a,
+[data-theme='dark'] .anuncio-page-heading h1,
+[data-theme='dark'] .anuncio-detail-info h1,
+[data-theme='dark'] .anuncio-detail-price,
+[data-theme='dark'] .anuncio-detail-description,
+[data-theme='dark'] .anuncio-card__title,
+[data-theme='dark'] .listagem-header h1,
+[data-theme='dark'] .listagem-vazia h2,
+[data-theme='dark'] .not-found-card h1,
+[data-theme='dark'] .modal-title {
+  color: var(--dark-text);
+}
+
+[data-theme='dark'] .auth-subtitle,
+[data-theme='dark'] .auth-footer,
+[data-theme='dark'] .auth-select-label,
+[data-theme='dark'] .profile-info p,
+[data-theme='dark'] .profile-edit-heading p,
+[data-theme='dark'] .profile-ad-content p,
+[data-theme='dark'] .profile-ad-category,
+[data-theme='dark'] .profile-status,
+[data-theme='dark'] .profile-empty,
+[data-theme='dark'] .anuncio-page-heading p,
+[data-theme='dark'] .anuncio-detail-category,
+[data-theme='dark'] .anuncio-detail-local,
+[data-theme='dark'] .anuncio-detail-date,
+[data-theme='dark'] .anuncio-detail-description,
+[data-theme='dark'] .anuncio-card__category,
+[data-theme='dark'] .anuncio-card__owner,
+[data-theme='dark'] .anuncio-interest-note,
+[data-theme='dark'] .anuncio-photo-heading p,
+[data-theme='dark'] .anuncio-photo-heading > span,
+[data-theme='dark'] .listagem-eyebrow,
+[data-theme='dark'] .listagem-resumo,
+[data-theme='dark'] .listagem-status,
+[data-theme='dark'] .listagem-vazia,
+[data-theme='dark'] .listagem-paginacao,
+[data-theme='dark'] .not-found-description,
+[data-theme='dark'] .modal-subtitle,
+[data-theme='dark'] .modal-body,
+[data-theme='dark'] .ui-input__label,
+[data-theme='dark'] .ui-select__label,
+[data-theme='dark'] .ui-input__helper,
+[data-theme='dark'] .ui-select__helper,
+[data-theme='dark'] .anuncio-field > label,
+[data-theme='dark'] .anuncio-state-control > label,
+[data-theme='dark'] .profile-photo-label,
+[data-theme='dark'] .profile-photo-editor p {
+  color: var(--dark-text-muted);
+}
+
+[data-theme='dark'] .ui-input__field,
+[data-theme='dark'] .ui-select__field,
+[data-theme='dark'] .auth-select,
+[data-theme='dark'] .anuncio-field textarea,
+[data-theme='dark'] .anuncio-field select,
+[data-theme='dark'] .anuncio-field input,
+[data-theme='dark'] .anuncio-state-control select {
+  border-color: #475569;
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+[data-theme='dark'] .ui-input__field::placeholder,
+[data-theme='dark'] .ui-select__field::placeholder,
+[data-theme='dark'] .auth-select::placeholder,
+[data-theme='dark'] .anuncio-field input::placeholder,
+[data-theme='dark'] .anuncio-field textarea::placeholder {
+  color: #7f8da1;
+}
+
+[data-theme='dark'] .ui-input__field:focus,
+[data-theme='dark'] .ui-select__field:focus,
+[data-theme='dark'] .auth-select:focus,
+[data-theme='dark'] .anuncio-field textarea:focus,
+[data-theme='dark'] .anuncio-field select:focus,
+[data-theme='dark'] .anuncio-field input:focus,
+[data-theme='dark'] .anuncio-state-control select:focus {
+  border-color: var(--dark-accent);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.16);
+}
+
+[data-theme='dark'] .ui-button--secondary,
+[data-theme='dark'] .theme-toggle,
+[data-theme='dark'] .anuncio-file-picker {
+  border-color: #475569;
+  background: var(--dark-surface-elevated);
+  color: var(--dark-text);
+}
+
+[data-theme='dark'] .ui-button--secondary:hover:not(:disabled),
+[data-theme='dark'] .theme-toggle:hover,
+[data-theme='dark'] .anuncio-file-picker:hover {
+  background: #263449;
+}
+
+[data-theme='dark'] .ui-button--primary {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+[data-theme='dark'] .ui-button--primary:hover:not(:disabled) {
+  background: #22c55e;
+}
+
+[data-theme='dark'] .listagem-tabs a {
+  color: var(--dark-text-muted);
+}
+
+[data-theme='dark'] .listagem-tabs a.active {
+  border-bottom-color: var(--dark-accent);
+  color: #86efac;
+}
+
+[data-theme='dark'] .anuncio-card__price,
+[data-theme='dark'] .anuncio-seller-card a,
+[data-theme='dark'] .auth-link,
+[data-theme='dark'] .not-found-brand,
+[data-theme='dark'] .not-found-code {
+  color: #4ade80;
+}
+
+[data-theme='dark'] .anuncio-card__image,
+[data-theme='dark'] .profile-ad-card > a,
+[data-theme='dark'] .profile-avatar,
+[data-theme='dark'] .anuncio-gallery-main,
+[data-theme='dark'] .anuncio-gallery-thumbnail {
+  background: var(--dark-bg);
+}
+
+[data-theme='dark'] .profile-ad-card,
+[data-theme='dark'] .anuncio-card,
+[data-theme='dark'] .anuncio-photo-item,
+[data-theme='dark'] .anuncio-gallery-thumbnail {
+  border-color: var(--dark-border);
+}
+
+[data-theme='dark'] .anuncio-card:hover {
+  border-color: #475569;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
+}
+
+[data-theme='dark'] .profile-alert-error,
+[data-theme='dark'] .anuncio-alert-error,
+[data-theme='dark'] .auth-alert-error,
+[data-theme='dark'] .listagem-alert {
+  border-color: #7f1d1d;
+  background: #3f1717;
+  color: #fecaca;
+}
+
+[data-theme='dark'] .profile-alert-success {
+  border-color: #166534;
+  background: #153525;
+  color: #bbf7d0;
+}
+
+[data-theme='dark'] .modal-overlay {
+  background: rgba(2, 6, 23, 0.78);
+}
+
+[data-theme='dark'] .modal-close {
+  color: var(--dark-text-muted);
+}
+
+[data-theme='dark'] .modal-close:hover {
+  background: #263449;
+  color: var(--dark-text);
+}
+
+[data-theme='dark'] .ui-badge--neutral {
+  border-color: #475569;
+  background: #334155;
+  color: #e2e8f0;
+}
+
+[data-theme='dark'] .ui-badge--success {
+  border-color: #166534;
+  background: #163825;
+  color: #86efac;
+}
+
+[data-theme='dark'] .ui-badge--warning {
+  border-color: #854d0e;
+  background: #422006;
+  color: #fde68a;
+}
+
+[data-theme='dark'] .ui-badge--info {
+  border-color: #075985;
+  background: #0c2f49;
+  color: #7dd3fc;
+}
+
+[data-theme='dark'] .ui-badge--primary {
+  border-color: #5b21b6;
+  background: #2e1065;
+  color: #c4b5fd;
+}
+
+[data-theme='dark'] .ui-badge--danger {
+  border-color: #991b1b;
+  background: #450a0a;
+  color: #fecaca;
 }

@@ -21,8 +21,13 @@ class CatalogoTest extends IntegracaoBase {
         Resposta r = api.get("/categorias", null);
 
         assertThat(r.status()).isEqualTo(200);
-        assertThat(r.<List<String>>json("$[*].slug")).containsExactly("eletronicos");
-        assertThat(r.<String>json("$[0].nome")).isEqualTo("Eletrônicos");
+        assertThat(r.<List<String>>json("$[*].slug")).containsExactlyInAnyOrder(
+            "eletronicos",
+            "jogos",
+            "artigos-esportivos",
+            "materiais-de-estudo"
+        );
+        assertThat(r.<List<String>>json("$[*].nome")).contains("Eletrônicos");
     }
 
     @Test

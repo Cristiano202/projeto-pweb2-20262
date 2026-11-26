@@ -44,7 +44,7 @@ export function AdminLoginPage() {
       <div className="auth-card">
         <div className="auth-header">
           <h1 className="auth-title">Painel Administrativo</h1>
-          <p className="auth-subtitle">Acesso restrito à equipe gestora do Marketplace IFPB</p>
+          <p className="auth-subtitle">Acesso restrito à equipe gestora do BRICS DO IF</p>
         </div>
 
         {(erroLocal || erro) && (

@@ -1,0 +1,90 @@
+.not-found-page {
+  min-height: 100svh;
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background: #f8fafc;
+  color: #111827;
+}
+
+.not-found-card {
+  width: min(540px, 100%);
+  box-sizing: border-box;
+  padding: 3rem 2rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  text-align: center;
+}
+
+.not-found-code {
+  display: block;
+  color: #16a34a;
+  font-size: clamp(4.5rem, 16vw, 7.5rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.08em;
+}
+
+.not-found-brand {
+  margin: 1.25rem 0 0.25rem;
+  color: #16a34a;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.not-found-card h1 {
+  margin: 0.25rem 0 0.75rem;
+  color: #111827;
+  font-size: 2rem;
+}
+
+.not-found-description {
+  max-width: 390px;
+  margin: 0 auto;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.not-found-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.not-found-actions a {
+  text-decoration: none;
+}
+
+[data-theme='dark'] .not-found-page {
+  background: #0f172a;
+}
+
+[data-theme='dark'] .not-found-card {
+  border-color: #334155;
+  background: #1e293b;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme='dark'] .not-found-card h1,
+[data-theme='dark'] .not-found-description {
+  color: #e2e8f0;
+}
+
+[data-theme='dark'] .not-found-description {
+  color: #94a3b8;
+}
+
+@media (max-width: 480px) {
+  .not-found-page { padding: 1rem; }
+  .not-found-card { padding: 2.25rem 1.25rem; }
+  .not-found-actions { flex-direction: column-reverse; }
+  .not-found-actions a,
+  .not-found-actions a button,
+  .not-found-actions > button { width: 100%; }
+}

@@ -5,6 +5,7 @@ import { listasService } from '../services/listasService';
 import { useAppDispatch, useAppSelector } from '../store';
 import { editarAnuncioThunk, buscarAnuncioPorIdThunk, limparAnuncioDetalhe } from '../store/anunciosSlice';
 import type { Categoria, EdicaoAnuncioForm } from '../types';
+import { Button } from '../components/ui';
 
 export function EditarAnuncioPage() {
   const { id } = useParams();
@@ -79,8 +80,11 @@ export function EditarAnuncioPage() {
     <main className="anuncio-page">
       <section className="anuncio-page-content">
         <header className="anuncio-page-heading">
-          <h1>Editar anúncio</h1>
-          <p>Atualize os dados e as fotos do seu anúncio.</p>
+          <div>
+            <h1>Editar anúncio</h1>
+            <p>Atualize os dados e as fotos do seu anúncio.</p>
+          </div>
+          <Button type="button" variant="secondary" onClick={() => navigate(-1)}>Voltar</Button>
         </header>
         {erroCategorias ? (
           <div className="anuncio-alert-error" role="alert">{erroCategorias}</div>

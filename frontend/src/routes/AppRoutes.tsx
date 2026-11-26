@@ -9,11 +9,17 @@ import { PublicProfilePage } from '../pages/PublicProfilePage';
 import { CriarAnuncioPage } from '../pages/CriarAnuncioPage';
 import { DetalheAnuncioPage } from '../pages/DetalheAnuncioPage';
 import { EditarAnuncioPage } from '../pages/EditarAnuncioPage';
+import { ListagemAnunciosPage } from '../pages/ListagemAnunciosPage';
+import { NotFoundPage } from '../pages/NotFoundPage';
+import { RootRedirect } from './RootRedirect';
 
 export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Redirecionamento da raiz conforme sessão e perfil */}
+        <Route path="/" element={<RootRedirect />} />
+
         {/* Únicas rotas públicas (RF01) */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/cadastro" element={<CadastroPage />} />
@@ -21,9 +27,8 @@ export function AppRoutes() {
 
         {/* Rotas Protegidas - Estudante */}
         <Route element={<ProtectedRoute perfisPermitidos={['ESTUDANTE']} />}>
-          <Route path="/" element={<Navigate to="/vendas" replace />} />
-          <Route path="/vendas" element={<div>Listagem de Vendas</div>} />
-          <Route path="/doacoes" element={<div>Listagem de Doações</div>} />
+          <Route path="/vendas" element={<ListagemAnunciosPage modalidade="venda" />} />
+          <Route path="/doacoes" element={<ListagemAnunciosPage modalidade="doacao" />} />
 
           <Route path="/perfil" element={<ProfilePage />} />
           <Route path="/perfil/editar" element={<ProfileEditPage />} />
@@ -36,11 +41,12 @@ export function AppRoutes() {
 
         {/* Rotas Protegidas - Administrador */}
         <Route element={<ProtectedRoute perfisPermitidos={['ADMIN']} />}>
-          <Route path="/admin" element={<div>Painel Administrativo</div>} />
+          <Route path="/admin" element={<Navigate to="/admin/anuncios" replace />} />
+          <Route path="/admin/anuncios" element={<div>Painel Administrativo</div>} />
         </Route>
 
         {/* Página 404 */}
-        <Route path="*" element={<div>404 - Página não encontrada</div>} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
