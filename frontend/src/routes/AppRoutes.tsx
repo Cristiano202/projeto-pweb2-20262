@@ -3,6 +3,12 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { LoginPage } from '../pages/LoginPage';
 import { CadastroPage } from '../pages/CadastroPage';
 import { AdminLoginPage } from '../pages/AdminLoginPage';
+import { ProfilePage } from '../pages/ProfilePage';
+import { ProfileEditPage } from '../pages/ProfileEditPage';
+import { PublicProfilePage } from '../pages/PublicProfilePage';
+import { CriarAnuncioPage } from '../pages/CriarAnuncioPage';
+import { DetalheAnuncioPage } from '../pages/DetalheAnuncioPage';
+import { EditarAnuncioPage } from '../pages/EditarAnuncioPage';
 
 export function AppRoutes() {
   return (
@@ -19,13 +25,13 @@ export function AppRoutes() {
           <Route path="/vendas" element={<div>Listagem de Vendas</div>} />
           <Route path="/doacoes" element={<div>Listagem de Doações</div>} />
 
-          <Route path="/perfil" element={<div>Meu Perfil</div>} />
-          <Route path="/perfil/editar" element={<div>Editar Perfil</div>} />
-          <Route path="/usuarios/:id" element={<div>Perfil Público do Estudante</div>} />
+          <Route path="/perfil" element={<ProfilePage />} />
+          <Route path="/perfil/editar" element={<ProfileEditPage />} />
+          <Route path="/usuarios/:id" element={<PublicProfilePage />} />
 
-          <Route path="/anuncios/novo" element={<div>Criar Anúncio</div>} />
-          <Route path="/anuncios/:id" element={<div>Detalhe do Anúncio</div>} />
-          <Route path="/anuncios/:id/editar" element={<div>Editar Anúncio</div>} />
+          <Route path="/anuncios/novo" element={<CriarAnuncioPage />} />
+          <Route path="/anuncios/:id" element={<DetalheAnuncioPage />} />
+          <Route path="/anuncios/:id/editar" element={<EditarAnuncioPage />} />
         </Route>
 
         {/* Rotas Protegidas - Administrador */}

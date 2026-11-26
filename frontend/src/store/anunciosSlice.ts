@@ -1,8 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { api } from '../services/api';
+import axios from 'axios';
+import { anuncioService } from '../services/anuncioService';
+import type {
+  AnuncioDetalhe,
+  ApiErro,
+  AlterarEstadoRequest,
+  EdicaoAnuncioForm,
+  NovoAnuncioForm,
+} from '../types';
 
 interface AnunciosState {
-  anuncioDetalhe: any | null;
+  anuncioDetalhe: AnuncioDetalhe | null;
   carregando: boolean;
   erro: string | null;
   errosCampos: Record<string, string>;
@@ -15,55 +23,60 @@ const initialState: AnunciosState = {
   errosCampos: {},
 };
 
-export const buscarAnuncioPorIdThunk = createAsyncThunk(
-  'anuncios/buscarPorId',
-  async (id: string | number, { rejectWithValue }) => {
-    try {
-      const { data } = await api.get(`/anuncios/${id}`);
-      return data;
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || { mensagem: 'Anúncio não encontrado' });
-    }
+function erroDaApi(error: unknown, mensagemPadrao: string): ApiErro {
+  if (axios.isAxiosError<ApiErro>(error) && error.response?.data) {
+    return error.response.data;
   }
-);
+  return { mensagem: mensagemPadrao };
+}
 
-export const criarAnuncioThunk = createAsyncThunk(
-  'anuncios/criar',
-  async (formData: FormData, { rejectWithValue }) => {
-    try {
-      const { data } = await api.post('/anuncios', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      return data;
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || { mensagem: 'Erro ao criar anúncio' });
-    }
+export const buscarAnuncioPorIdThunk = createAsyncThunk<
+  AnuncioDetalhe,
+  string | number,
+  { rejectValue: ApiErro }
+>('anuncios/buscarPorId', async (id, { rejectWithValue }) => {
+  try {
+    return await anuncioService.obterDetalhe(Number(id));
+  } catch (error) {
+    return rejectWithValue(erroDaApi(error, 'Não foi possível carregar o anúncio.'));
   }
-);
+});
 
-export const editarAnuncioThunk = createAsyncThunk(
-  'anuncios/editar',
-  async ({ id, dados }: { id: string | number; dados: any }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.put(`/anuncios/${id}`, dados);
-      return data;
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || { mensagem: 'Erro ao editar anúncio' });
-    }
+export const criarAnuncioThunk = createAsyncThunk<
+  AnuncioDetalhe,
+  NovoAnuncioForm,
+  { rejectValue: ApiErro }
+>('anuncios/criar', async (dados, { rejectWithValue }) => {
+  try {
+    return await anuncioService.criar(dados);
+  } catch (error) {
+    return rejectWithValue(erroDaApi(error, 'Não foi possível criar o anúncio.'));
   }
-);
+});
 
-export const alterarEstadoAnuncioThunk = createAsyncThunk(
-  'anuncios/alterarEstado',
-  async ({ id, estado }: { id: string | number; estado: string }, { rejectWithValue }) => {
-    try {
-      const { data } = await api.patch(`/anuncios/${id}/estado`, { estado });
-      return data;
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data || { mensagem: 'Erro ao alterar estado' });
-    }
+export const editarAnuncioThunk = createAsyncThunk<
+  AnuncioDetalhe,
+  { id: string | number; dados: EdicaoAnuncioForm },
+  { rejectValue: ApiErro }
+>('anuncios/editar', async ({ id, dados }, { rejectWithValue }) => {
+  try {
+    return await anuncioService.editar(Number(id), dados);
+  } catch (error) {
+    return rejectWithValue(erroDaApi(error, 'Não foi possível editar o anúncio.'));
   }
-);
+});
+
+export const alterarEstadoAnuncioThunk = createAsyncThunk<
+  AnuncioDetalhe,
+  { id: string | number; dados: AlterarEstadoRequest },
+  { rejectValue: ApiErro }
+>('anuncios/alterarEstado', async ({ id, dados }, { rejectWithValue }) => {
+  try {
+    return await anuncioService.alterarEstado(Number(id), dados);
+  } catch (error) {
+    return rejectWithValue(erroDaApi(error, 'Não foi possível alterar o estado.'));
+  }
+});
 
 const anunciosSlice = createSlice({
   name: 'anuncios',
@@ -71,6 +84,7 @@ const anunciosSlice = createSlice({
   reducers: {
     limparAnuncioDetalhe(state) {
       state.anuncioDetalhe = null;
+      state.carregando = false;
       state.erro = null;
       state.errosCampos = {};
     },
@@ -80,14 +94,16 @@ const anunciosSlice = createSlice({
       .addCase(buscarAnuncioPorIdThunk.pending, (state) => {
         state.carregando = true;
         state.erro = null;
+        state.errosCampos = {};
       })
       .addCase(buscarAnuncioPorIdThunk.fulfilled, (state, action) => {
         state.carregando = false;
         state.anuncioDetalhe = action.payload;
       })
-      .addCase(buscarAnuncioPorIdThunk.rejected, (state, action: any) => {
+      .addCase(buscarAnuncioPorIdThunk.rejected, (state, action) => {
         state.carregando = false;
-        state.erro = action.payload?.mensagem || 'Erro ao carregar anúncio';
+        state.erro = action.payload?.mensagem || 'Não foi possível carregar o anúncio.';
+        state.errosCampos = action.payload?.campos || {};
       })
       .addCase(criarAnuncioThunk.pending, (state) => {
         state.carregando = true;
@@ -98,18 +114,38 @@ const anunciosSlice = createSlice({
         state.carregando = false;
         state.anuncioDetalhe = action.payload;
       })
-      .addCase(criarAnuncioThunk.rejected, (state, action: any) => {
+      .addCase(criarAnuncioThunk.rejected, (state, action) => {
         state.carregando = false;
-        state.erro = action.payload?.mensagem || 'Erro ao criar anúncio';
+        state.erro = action.payload?.mensagem || 'Não foi possível criar o anúncio.';
         state.errosCampos = action.payload?.campos || {};
+      })
+      .addCase(editarAnuncioThunk.pending, (state) => {
+        state.carregando = true;
+        state.erro = null;
+        state.errosCampos = {};
       })
       .addCase(editarAnuncioThunk.fulfilled, (state, action) => {
         state.carregando = false;
         state.anuncioDetalhe = action.payload;
       })
+      .addCase(editarAnuncioThunk.rejected, (state, action) => {
+        state.carregando = false;
+        state.erro = action.payload?.mensagem || 'Não foi possível editar o anúncio.';
+        state.errosCampos = action.payload?.campos || {};
+      })
+      .addCase(alterarEstadoAnuncioThunk.pending, (state) => {
+        state.carregando = true;
+        state.erro = null;
+        state.errosCampos = {};
+      })
       .addCase(alterarEstadoAnuncioThunk.fulfilled, (state, action) => {
         state.carregando = false;
         state.anuncioDetalhe = action.payload;
+      })
+      .addCase(alterarEstadoAnuncioThunk.rejected, (state, action) => {
+        state.carregando = false;
+        state.erro = action.payload?.mensagem || 'Não foi possível alterar o estado.';
+        state.errosCampos = action.payload?.campos || {};
       });
   },
 });

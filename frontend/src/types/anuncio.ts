@@ -33,6 +33,7 @@ export interface AnuncioResumo {
   capaUrl: string;
   anunciante: AnuncianteResumo;
   publicadoEm: string;
+  motivoRemocao?: string | null;
 }
 
 export type PaginaAnuncioResumo = PaginaResposta<AnuncioResumo>;

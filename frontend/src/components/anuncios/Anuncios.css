@@ -1,0 +1,372 @@
+.anuncio-page {
+  min-height: 100svh;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2rem;
+  background: #f8fafc;
+  color: #111827;
+  text-align: left;
+}
+
+.anuncio-page-content {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.anuncio-page-heading {
+  margin-bottom: 1.5rem;
+}
+
+.anuncio-page-heading h1 {
+  margin: 0 0 0.5rem;
+  color: #111827;
+  font-size: 1.75rem;
+}
+
+.anuncio-page-heading p {
+  color: #6b7280;
+}
+
+.anuncio-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.anuncio-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+.anuncio-field > label,
+.anuncio-state-control > label {
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.anuncio-field > label span {
+  color: #dc2626;
+}
+
+.anuncio-field textarea,
+.anuncio-field select,
+.anuncio-field input,
+.anuncio-state-control select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #111827;
+  font: inherit;
+}
+
+.anuncio-field textarea {
+  resize: vertical;
+}
+
+.anuncio-field textarea:focus,
+.anuncio-field select:focus,
+.anuncio-field input:focus,
+.anuncio-state-control select:focus {
+  outline: 2px solid rgba(22, 163, 74, 0.35);
+  border-color: #16a34a;
+}
+
+.anuncio-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.anuncio-field-error {
+  color: #b91c1c;
+  font-size: 0.8125rem;
+}
+
+.anuncio-alert-error {
+  padding: 0.75rem 1rem;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.875rem;
+}
+
+.anuncio-photo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.anuncio-photo-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.anuncio-photo-heading h2 {
+  margin: 0 0 0.25rem;
+  color: #111827;
+  font-size: 1.125rem;
+}
+
+.anuncio-photo-heading p,
+.anuncio-photo-heading > span {
+  color: #6b7280;
+  font-size: 0.8125rem;
+}
+
+.anuncio-file-picker {
+  position: relative;
+  display: inline-flex;
+  align-self: flex-start;
+  overflow: hidden;
+  padding: 0.625rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #1f2937;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.anuncio-file-picker:hover {
+  background: #f3f4f6;
+}
+
+.anuncio-file-picker input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.anuncio-file-picker input:disabled {
+  cursor: not-allowed;
+}
+
+.anuncio-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.anuncio-photo-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.anuncio-photo-item img {
+  width: 100%;
+  height: 112px;
+  object-fit: cover;
+  border-radius: 5px;
+  background: #f3f4f6;
+}
+
+.anuncio-photo-item label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #374151;
+  font-size: 0.75rem;
+}
+
+.anuncio-photo-item button {
+  align-self: flex-start;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #b91c1c;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.anuncio-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.anuncio-gallery {
+  min-width: 0;
+}
+
+.anuncio-gallery-main {
+  overflow: hidden;
+  border-radius: 10px;
+  background: #f3f4f6;
+}
+
+.anuncio-gallery-main img {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+}
+
+.anuncio-gallery-thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.75rem 0 0.25rem;
+}
+
+.anuncio-gallery-thumbnail {
+  width: 72px;
+  height: 60px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: #f3f4f6;
+  cursor: pointer;
+}
+
+.anuncio-gallery-thumbnail--selected {
+  border-color: #16a34a;
+}
+
+.anuncio-gallery-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.anuncio-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 2rem;
+}
+
+.anuncio-detail-info h1 {
+  margin: 0.75rem 0;
+  color: #111827;
+  font-size: 1.75rem;
+}
+
+.anuncio-detail-price {
+  margin: 0.75rem 0;
+  color: #111827;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.anuncio-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.anuncio-detail-category,
+.anuncio-detail-local,
+.anuncio-detail-date {
+  margin: 0.5rem 0;
+  color: #4b5563;
+}
+
+.anuncio-detail-description {
+  margin-top: 1.5rem;
+  color: #374151;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.anuncio-seller-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.anuncio-seller-card a {
+  color: #166534;
+  font-weight: 600;
+}
+
+.anuncio-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.anuncio-interest-note {
+  margin-top: 0.5rem;
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
+.anuncio-state-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.anuncio-state-control-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.anuncio-state-control-row select {
+  width: auto;
+  min-width: 150px;
+}
+
+.anuncio-page-status {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 2rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .anuncio-page {
+    padding: 1rem;
+  }
+
+  .anuncio-page-content {
+    padding: 1.25rem;
+  }
+
+  .anuncio-form-grid,
+  .anuncio-detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .anuncio-detail-layout {
+    gap: 1rem;
+  }
+}
