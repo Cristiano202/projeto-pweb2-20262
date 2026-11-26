@@ -45,6 +45,29 @@ export const loginThunk = createAsyncThunk(
   }
 );
 
+export const loginAdminThunk = createAsyncThunk(
+  'auth/loginAdmin',
+  async (credenciais: { email: string; senha: string }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post('/auth/login', credenciais);
+      const perfil = String(data.usuario?.perfil || data.usuario?.papel || '').toUpperCase();
+
+      if (perfil !== 'ADMIN') {
+        return rejectWithValue({
+          mensagem: 'Acesso negado: esta conta não possui perfil de administrador.',
+          campos: {},
+        });
+      }
+
+      return data;
+    } catch (err: any) {
+      return rejectWithValue(
+        err.response?.data || { mensagem: 'Erro ao realizar login administrativo', campos: {} }
+      );
+    }
+  }
+);
+
 export const cadastroThunk = createAsyncThunk(
   'auth/cadastro',
   async (
@@ -66,16 +89,26 @@ export const restaurarSessaoThunk = createAsyncThunk(
   'auth/restaurarSessao',
   async (_, { rejectWithValue }) => {
     const token = localStorage.getItem('token');
+    const usuarioSalvo = JSON.parse(localStorage.getItem('usuario') || 'null');
+    const perfilSalvo = (localStorage.getItem('perfil') as PerfilUsuario | null) || 'ESTUDANTE';
+
     if (!token) return rejectWithValue(null);
 
     try {
       const { data } = await api.get('/usuarios/me');
-      return { token, usuario: data };
-    } catch {
-      localStorage.removeItem('token');
-      localStorage.removeItem('perfil');
-      localStorage.removeItem('usuario');
-      return rejectWithValue(null);
+      return {
+        token,
+        usuario: data && typeof data === 'object' ? { ...usuarioSalvo, ...data } : usuarioSalvo,
+        perfil: perfilSalvo,
+      };
+    } catch (err: any) {
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('perfil');
+        localStorage.removeItem('usuario');
+        return rejectWithValue(null);
+      }
+      return { token, usuario: usuarioSalvo, perfil: perfilSalvo };
     }
   }
 );
@@ -126,6 +159,25 @@ const authSlice = createSlice({
         state.erro = action.payload?.mensagem || 'Falha na autenticação';
         state.errosCampos = action.payload?.campos || {};
       })
+      .addCase(loginAdminThunk.pending, (state) => {
+        state.carregando = true;
+        state.erro = null;
+        state.errosCampos = {};
+      })
+      .addCase(loginAdminThunk.fulfilled, (state, action) => {
+        state.carregando = false;
+        state.token = action.payload.token;
+        state.usuario = action.payload.usuario || null;
+        state.perfil = action.payload.usuario?.perfil || 'ADMIN';
+        localStorage.setItem('token', state.token!);
+        localStorage.setItem('perfil', state.perfil!);
+        if (state.usuario) localStorage.setItem('usuario', JSON.stringify(state.usuario));
+      })
+      .addCase(loginAdminThunk.rejected, (state, action: any) => {
+        state.carregando = false;
+        state.erro = action.payload?.mensagem || 'Falha na autenticação administrativa';
+        state.errosCampos = action.payload?.campos || {};
+      })
       .addCase(cadastroThunk.pending, (state) => {
         state.carregando = true;
         state.erro = null;
@@ -150,7 +202,7 @@ const authSlice = createSlice({
       .addCase(restaurarSessaoThunk.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.usuario = action.payload.usuario;
-        state.perfil = action.payload.usuario?.perfil || 'ESTUDANTE';
+        state.perfil = action.payload.perfil;
       })
       .addCase(restaurarSessaoThunk.rejected, (state) => {
         state.token = null;

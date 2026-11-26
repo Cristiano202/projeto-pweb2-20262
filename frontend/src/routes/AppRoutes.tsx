@@ -1,14 +1,17 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
+import { LoginPage } from '../pages/LoginPage';
+import { CadastroPage } from '../pages/CadastroPage';
+import { AdminLoginPage } from '../pages/AdminLoginPage';
 
 export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         {/* Únicas rotas públicas (RF01) */}
-        <Route path="/login" element={<div>Login Estudante</div>} />
-        <Route path="/cadastro" element={<div>Cadastro Estudante</div>} />
-        <Route path="/admin/login" element={<div>Login Administrador</div>} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/cadastro" element={<CadastroPage />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
 
         {/* Rotas Protegidas - Estudante */}
         <Route element={<ProtectedRoute perfisPermitidos={['ESTUDANTE']} />}>
